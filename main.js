@@ -4,6 +4,8 @@ function getEle(params) {
 
 var array = []
 
+var newArray = []
+
 getEle('btnNhapMang').onclick = function(){
     var phanTu = getEle('phanTu').value*1;
     array.push(phanTu) ;
@@ -41,8 +43,16 @@ getEle('chonChucNang').onchange = function(){
     }else if(chucNang === "8"){
         content += ' <button class="btn btn-danger"  onclick="timSoNguyenTo()" >Tìm</button>'
         content += '<div class="alert alert-success mt-3">Số nguyên tố đầu tiên trong mảng là: <span id="soNguyenTo"></span> </div> '
+    }else if( chucNang === "9"){
+        content += '<input type="text" class="form-control" id="phanTuSoThuc" placeholder="Nhập thêm số thực vào mảng">'
+        content += '<div><button class="btn btn-info mt-3" onclick="nhapThemPhanTu()">Thêm số</button></div>'
+        content += '<div class="alert alert-success mt-3">Mảng mới là: <span id="infoNewArray"></span></div>'
+        content += '<button class="btn btn-info mt-3" onclick="demSoNguyen()" >Đếm số</button>'
+        content += '<div class="alert alert-success mt-3">Số nguyên trong mảng là: <span id="soNguyen"></span></div>'
+    }else if( chucNang === "10"){
+        content += ' <button class="btn btn-danger"  onclick="soSanhAmDuong()" >Đếm</button>'
+        content += '<div class="alert alert-success mt-3"> <span id="dauSoSanh"></span> </div> '
     }
-
     getEle('infoChucNang').innerHTML = content;
 }
 
@@ -159,5 +169,41 @@ function timSoNguyenTo(){
     getEle('soNguyenTo').innerHTML = soNguyenTo;
 }   
 
+function nhapThemPhanTu(){
+    newArray = array;
+    var phanTuSoThuc = getEle('phanTuSoThuc').value*1;
+    newArray.push(phanTuSoThuc);
+    getEle('infoNewArray').innerHTML = newArray;
+}
+
+function demSoNguyen(){
+    count = 0;
+    for(var i = 0; i<newArray.length; i++){
+        if(newArray[i] % 1 === 0){
+            count += 1;
+        }
+    }
+    getEle('soNguyen').innerHTML = count;
+}
 
 
+function soSanhAmDuong(){
+    var soAm = 0;
+    var soDuong = 0;
+    var rs = ''
+    for(var i = 0; i < array.length; i++){
+        if(array[i] < 0 ){
+            soAm += 1
+        }else if(array[i]> 0){
+            soDuong +=1
+        }
+    }
+    if( soAm > soDuong){
+        rs = 'Số dương < Số âm ';
+    }else if(soAm < soDuong){
+        rs = 'Số dương > Số âm ';
+    }else if ( soAm == soDuong ){
+        rs = 'Số dương = Số âm ';
+    }
+    getEle('dauSoSanh').innerHTML = rs;
+}
